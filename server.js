@@ -25,7 +25,7 @@ router.get('/', async(ctx, next) => {
 })
 
 router.post('/sites', async(ctx, next) => {
-    const data = ctx.request.body;
+    const data = JSON.parse(ctx.request.body);
     let newSites = sites;
     const validate = newSites.list.indexOf(data.name) == -1;
 
