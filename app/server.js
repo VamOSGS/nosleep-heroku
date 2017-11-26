@@ -23,13 +23,6 @@ app
       hbs: 'handlebars'
     }
   }))
-  .use(function (ctx) {
-    ctx.state = {
-      title: 'nosleep-server',
-      sites: sites.list
-    }
-    return ctx.render('../views/index.hbs')
-  })
   .use(cors())
   .use(koaBody())
   .use(router.routes())

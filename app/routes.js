@@ -1,17 +1,27 @@
-const updateFile = require('./utils');
-module.exports = (router, sites) => {
-  
+const {
+  updateFile
+} = require('./utils');
+
+module.exports = (router, sites, render) => {
+
   router.get('/', async(ctx, next) => {
-    ctx.body = sites;
+    ctx.state = {
+      title: 'nosleep-server',
+      sites: sites.list
+    }
+    return ctx.render('../views/index.hbs')
   })
 
-  router.post('/sites', async(ctx, next) => {
-    const data = JSON.parse(ctx.request.body);
+  router.post('/sites/:name', async(ctx, next) => {
+    const name = ctx.params.name;
+    console.log('------------------------------------');
+    console.log(name);
+    console.log('------------------------------------');
     let newSites = sites;
-    const validate = newSites.list.indexOf(data.name) == -1;
+    const validate = newSites.list.indexOf(name) == -1;
 
     if (validate) {
-      newSites.list = [...newSites.list, data.name];
+      newSites.list = [...newSites.list, name];
       updateFile(newSites);
       ctx.body = newSites;
     } else {
